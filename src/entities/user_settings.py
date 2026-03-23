@@ -1,7 +1,5 @@
-from typing import Optional, List, Union
-from uuid import UUID, uuid4
-import re
-
+from typing import Optional, List
+from uuid import UUID
 from datetime import time
 from dataclasses import dataclass
 
@@ -17,7 +15,10 @@ class SleepSchedule:
         self.validate()
 
     def validate(self) -> bool:
-        # pass
+        if self.weekday_wake_up == self.weekday_bedtime:
+            raise ValueError("Weekday wake up must not be equal bedtime")
+        if self.weekend_wake_up == self.weekend_bedtime:
+            raise ValueError("Weekend wake up must not be equal bedtime")
         return True
 
 
@@ -98,9 +99,7 @@ class UserSettings:
             self.stress_coping_methods.remove(method)
 
     def update_sleep_schedule(self, schedule: SleepSchedule) -> None:
-        if schedule.validate():
-            self.sleep_schedule = schedule
+        self.sleep_schedule = schedule
 
     def update_notification_preferences(self, prefs: NotificationPreferences) -> None:
-        if prefs.validate():
-            self.notification_prefs = prefs
+        self.notification_prefs = prefs

@@ -1,8 +1,6 @@
 from dataclasses import dataclass, field
-from datetime import datetime
 from typing import Optional, List, Union
 from uuid import UUID, uuid4
-import re
 
 from typing import TYPE_CHECKING
 
@@ -12,11 +10,11 @@ if TYPE_CHECKING:
 
 @dataclass
 class Recommendation:
-    trigger_type: str
-    category: str
-    message: str
-    priority: int
     id: UUID = field(default_factory=uuid4)
+    trigger_type: str = ""
+    category: str = ""
+    message: str = ""
+    priority: int = 1
 
     @classmethod
     def create(

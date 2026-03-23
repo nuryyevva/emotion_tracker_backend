@@ -1,19 +1,20 @@
 from dataclasses import dataclass, field
 from datetime import datetime
-from typing import Optional, List, Union
+from typing import Optional
 from uuid import UUID, uuid4
-import re
+
 
 @dataclass
 class EmotionRecord:
+    id: UUID
     user_id: UUID
     mood: int
     anxiety: int
     fatigue: int
     sleep_hours: float
-    date: datetime = field(default_factory=datetime.now)
+    date: datetime
     note: Optional[str] = None
-    id: UUID = field(default_factory=uuid4)
+
 
     @classmethod
     def create(
@@ -27,11 +28,13 @@ class EmotionRecord:
     ) -> 'EmotionRecord':
 
         record = cls(
+            id=uuid4(),
             user_id=user_id,
             mood=mood,
             anxiety=anxiety,
             fatigue=fatigue,
             sleep_hours=sleep_hours,
+            date=datetime.now,
             note=note
         )
 
